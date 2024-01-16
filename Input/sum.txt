@@ -1,0 +1,102 @@
+Input->
+	 index.html 
+	
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Page + </title>
+    
+  </head>
+  <body>
+<form action="addservlet" method="get" align="center">
+  <div class="mb-3 container">
+    <label for="num1" class="form-label">Number 1</label>
+    <input type="text" class="form-control" name="num1" aria-describedby="Enter Number 1">
+
+    <label for="num2" class="form-label">Number 2</label>
+    <input type="text" class="form-control" name="num2">
+<br>
+  <button type="submit" class="btn btn-primary container">Submit</button>
+  </div>
+</form>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  </body>
+</html>
+
+-------------------------------------------------------------------------
+
+Input ->
+	 result.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition Result</title>
+</head>
+<body>
+    <h2>Addition Result</h2>
+    <div id="result"></div>
+
+    <script>
+        // Extract the result from the URL query parameters
+        var urlParams = new URLSearchParams(window.location.search);
+        var result = urlParams.get('result');
+
+        // Display the result in the 'result' div
+        document.getElementById("result").innerHTML = result;
+    </script>
+</body>
+</html>
+
+-----------------------------------------------------------------------------
+
+Input -> src/main/java/pkg under 
+		addservlet.java
+
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/addservlet")
+public class addservlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+//		response.getWriter().append("Served at: ").append(request.getContextPath());
+PrintWriter pw = response.getWriter();
+		
+		int n1 = Integer.parseInt(request.getParameter("num1"));
+		int n2 = Integer.parseInt(request.getParameter("num2"));
+		int sum = n1+n2;
+		
+		pw.println(n1 +"+"+ n2 +"="+ sum);
+		
+		 // Set the result as an attribute in the request
+        request.setAttribute("result", n1 + " + " + n2 + " = " + sum);
+
+
+        // Redirect to the result.html passing the result as a query parameter
+        response.sendRedirect("result.html?result=" + sum);
+		
+		
+	}
+
+}
+
+
