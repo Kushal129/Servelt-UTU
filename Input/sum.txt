@@ -28,32 +28,7 @@ Input->
   </body>
 </html>
 
--------------------------------------------------------------------------
 
-Input ->
-	 result.html
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Addition Result</title>
-</head>
-<body>
-    <h2>Addition Result</h2>
-    <div id="result"></div>
-
-    <script>
-        // Extract the result from the URL query parameters
-        var urlParams = new URLSearchParams(window.location.search);
-        var result = urlParams.get('result');
-
-        // Display the result in the 'result' div
-        document.getElementById("result").innerHTML = result;
-    </script>
-</body>
-</html>
 
 -----------------------------------------------------------------------------
 
@@ -100,3 +75,29 @@ PrintWriter pw = response.getWriter();
 }
 
 
+-------------------------------------------------------------------------
+
+Input ->
+   result.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition Result</title>
+</head>
+<body>
+    <h2>Addition Result</h2>
+    <div id="result"></div>
+
+    <script>
+        // Extract the result from the URL query parameters
+        var urlParams = new URLSearchParams(window.location.search);
+        var result = urlParams.get('result');
+
+        // Display the result in the 'result' div
+        document.getElementById("result").innerHTML = result;
+    </script>
+</body>
+</html>
