@@ -6,7 +6,7 @@
 2- file java file banavi 
     get data ne CRUD karva
  
-3- project right click kari configure build       path ma jai ne Library ma 1. file serverl... ne 2. MySQL... vali baney jar file ne add karvani.
+3- project right click kari configure build       path ma jai ne Library ma jai Classpath ma 1. file serverl... ne 2. MySQL... vali baney jar file ne add karvani.
 pachi temaj order and export ma select all apply ans close 
 
 4- (for linux )Pachi termial ma MySQL ma database banavi ne code ma java filee ma connection karavu.
