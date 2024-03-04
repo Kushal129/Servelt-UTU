@@ -1,0 +1,104 @@
+login.html
+LoginServlet.java
+String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // You should perform actual authentication here (e.g., check against a database)
+        boolean isAuthenticated = authenticate(username, password);
+
+        if (isAuthenticated) {
+            // Create a session and store the username
+            HttpSession session = request.getSession();
+            session.setAttribute("username", username);
+
+            // Redirect to the welcome page
+            response.sendRedirect("WelcomeServlet");
+        } else {
+            // Redirect back to the login page if authentication fails
+            response.sendRedirect("login.html");
+        }
+    }
+
+    private boolean authenticate(String username, String password) {
+        // Perform actual authentication logic here (e.g., check against a database)
+        // For simplicity, let's assume the authentication always succeeds in this example
+        return true;
+    }
+
+:- WelcomeServlet.java
+
+protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the session, and check if the user is logged in
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("username") != null) {
+            // User is logged in, display the welcome message
+            String username = (String) session.getAttribute("username");
+
+            response.setContentType("text/html");
+            response.getWriter().println("<html><body>");
+            response.getWriter().println("<h2>Hello, " + username + "!</h2>");
+            response.getWriter().println("<form action='LogoutServlet' method='post'>");
+            response.getWriter().println("<input type='submit' value='Logout'>");
+            response.getWriter().println("</form>");
+            response.getWriter().println("</body></html>");
+        } else {
+            // User is not logged in, redirect to the login page
+            response.sendRedirect("login.html");
+        }
+    }
+
+:-LogoutServlet.java
+
+protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        // Get the session and invalidate it (logout)
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        response.sendRedirect("login.html");
+    }
+----------------------------------------------------
+:- Register 
+
+@WebServlet("/Register")
+public class Register extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		response.setContentType("text/html");
+		String dburl = "jdbc:mysql://localhost:3306/reg";
+		String dbusr = "root";
+		String dbpwd = "root";
+		PrintWriter out = response.getWriter();
+		String name=request.getParameter("name");
+		String email=request.getParameter("email");
+		
+		try {
+			
+			Class.forName("com.mysql.jdbc.Driver");
+			Connection con = DriverManager.getConnection(dburl,dbusr,dbpwd);
+			
+			PreparedStatement ps = con.prepareStatement("insert into reg_info values(? , ?)");
+			ps.setString(1, name);
+			ps.setString(2, email);
+			
+			int i = ps.executeUpdate();
+			
+			if (i > 0) {
+				out.print("You Are Done..!!");
+			}
+			
+		} catch (Exception e) {
+			System.out.println(e);
+			
+		}	
+		
+	}
+
+}
